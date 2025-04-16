@@ -4,8 +4,8 @@ using UnityEngine;
 public class FPSmanager : MonoBehaviour
 {
     [Header("Frame Settings")]
-    int MaxRate = 60;
-    public float TargetFrameRate = 60.0f;
+    int MaxRate = 90;
+    public float TargetFrameRate = 90.0f;
     float currentFrameTime;
     void Awake()
     {
