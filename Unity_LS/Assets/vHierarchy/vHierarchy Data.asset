@@ -22,6 +22,12 @@ MonoBehaviour:
         - globalObjectIdString: GlobalObjectId_V1-2-99c9720ab356a0642a771bea13969a05-1819066780-0
         - globalObjectIdString: GlobalObjectId_V1-2-99c9720ab356a0642a771bea13969a05-330585543-0
         - globalObjectIdString: GlobalObjectId_V1-2-99c9720ab356a0642a771bea13969a05-410087039-0
+        - globalObjectIdString: GlobalObjectId_V1-2-99c9720ab356a0642a771bea13969a05-1277672350-0
+        - globalObjectIdString: GlobalObjectId_V1-2-99c9720ab356a0642a771bea13969a05-258375821-0
+        - globalObjectIdString: GlobalObjectId_V1-2-99c9720ab356a0642a771bea13969a05-715953925-0
+        - globalObjectIdString: GlobalObjectId_V1-2-99c9720ab356a0642a771bea13969a05-1796943686-0
+        - globalObjectIdString: GlobalObjectId_V1-2-99c9720ab356a0642a771bea13969a05-832575517-0
+        - globalObjectIdString: GlobalObjectId_V1-2-99c9720ab356a0642a771bea13969a05-1795895226-0
         values:
         - colorIndex: 5
           iconNameOrGuid: Canvas Icon
@@ -31,3 +37,15 @@ MonoBehaviour:
           iconNameOrGuid: Camera Icon
         - colorIndex: 0
           iconNameOrGuid: DirectionalLight Icon
+        - colorIndex: 1
+          iconNameOrGuid: StandaloneInputModule Icon
+        - colorIndex: 4
+          iconNameOrGuid: MeshCollider Icon
+        - colorIndex: 4
+          iconNameOrGuid: MeshCollider Icon
+        - colorIndex: 1
+          iconNameOrGuid: StandaloneInputModule Icon
+        - colorIndex: 1
+          iconNameOrGuid: EventSystem Icon
+        - colorIndex: 7
+          iconNameOrGuid: PreMatCube

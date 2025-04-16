@@ -31,6 +31,7 @@ MonoBehaviour:
     - c3619cb2ca2e9a8488ef80bd300936d3
     - 419e5d102c1b97d4ea1e61b9b30a1dc3
     - ebae46c28ae25b2439b1d8b6ce4b9341
+    - 8033a88095a4330498bd8f9cb7bb1bb1
     values:
     - iconNameOrGuid: 
       colorIndex: 8
@@ -97,6 +98,10 @@ MonoBehaviour:
       isIconRecursive: 0
       isColorRecursive: 0
     - iconNameOrGuid: Font Icon
+      colorIndex: 0
+      isIconRecursive: 0
+      isColorRecursive: 0
+    - iconNameOrGuid: AudioSource Icon
       colorIndex: 0
       isIconRecursive: 0
       isColorRecursive: 0
