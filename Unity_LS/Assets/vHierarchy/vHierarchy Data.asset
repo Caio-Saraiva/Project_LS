@@ -28,6 +28,8 @@ MonoBehaviour:
         - globalObjectIdString: GlobalObjectId_V1-2-99c9720ab356a0642a771bea13969a05-1796943686-0
         - globalObjectIdString: GlobalObjectId_V1-2-99c9720ab356a0642a771bea13969a05-832575517-0
         - globalObjectIdString: GlobalObjectId_V1-2-99c9720ab356a0642a771bea13969a05-1795895226-0
+        - globalObjectIdString: GlobalObjectId_V1-2-99c9720ab356a0642a771bea13969a05-1655400802-0
+        - globalObjectIdString: GlobalObjectId_V1-2-99c9720ab356a0642a771bea13969a05-770213354-0
         values:
         - colorIndex: 5
           iconNameOrGuid: Canvas Icon
@@ -49,3 +51,7 @@ MonoBehaviour:
           iconNameOrGuid: EventSystem Icon
         - colorIndex: 7
           iconNameOrGuid: PreMatCube
+        - colorIndex: 2
+          iconNameOrGuid: 
+        - colorIndex: 2
+          iconNameOrGuid: 
