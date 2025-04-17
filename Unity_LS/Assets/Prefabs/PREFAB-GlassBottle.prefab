@@ -51,12 +51,13 @@ MonoBehaviour:
   originalModelPrefab: {fileID: 288535122417344474, guid: 13066a118fccb9047af3da9e8f42ea1f, type: 3}
   destroyStagePrefabs:
   - {fileID: 1985635566450474817, guid: 9a40b7870720bfa4488fe8f6ddf946af, type: 3}
+  hitEffectPrefab: {fileID: 2255369286703362343, guid: cf777814532b0f14498be18abd646da2, type: 3}
+  destroyEffectPrefab: {fileID: 2255369286703362343, guid: cf777814532b0f14498be18abd646da2, type: 3}
   hitSounds:
   - {fileID: 8300000, guid: fcdfe5e9f7cd4b34db2503617df84b1e, type: 3}
   destroySounds:
   - {fileID: 8300000, guid: f667ba0f584942c4ba87ee7975c7fc1b, type: 3}
   - {fileID: 8300000, guid: 1c99297bae1595f458a885fe76782910, type: 3}
-  destroyEffectPrefab: {fileID: 0}
 --- !u!65 &2362446475557867073
 BoxCollider:
   m_ObjectHideFlags: 0

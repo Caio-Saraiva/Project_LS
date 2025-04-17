@@ -53,11 +53,12 @@ MonoBehaviour:
   - {fileID: 4458400007591507823, guid: 040dcdecd1c9f2d4c98e15a1679489b1, type: 3}
   - {fileID: 2328648705184810911, guid: b7b50988aa9f90f44898254a4552d30d, type: 3}
   - {fileID: 2273121936811794925, guid: a96042514b2de124bb492603fdefd533, type: 3}
+  hitEffectPrefab: {fileID: 2255369286703362343, guid: 88fd834ea81090941aaa18b36658b02b, type: 3}
+  destroyEffectPrefab: {fileID: 2255369286703362343, guid: 88fd834ea81090941aaa18b36658b02b, type: 3}
   hitSounds:
   - {fileID: 8300000, guid: 4d64f42a8a44f1b4681b12bfd6e77021, type: 3}
   destroySounds:
   - {fileID: 8300000, guid: 4d64f42a8a44f1b4681b12bfd6e77021, type: 3}
-  destroyEffectPrefab: {fileID: 0}
 --- !u!65 &8047305774272821515
 BoxCollider:
   m_ObjectHideFlags: 0

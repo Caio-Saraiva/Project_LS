@@ -16,19 +16,30 @@ public class DestructibleItem : MonoBehaviour
     [Header("Modelos 3D")]
     [Tooltip("Prefab do modelo 3D inicial.")]
     public GameObject originalModelPrefab;
-    [Tooltip("Lista de prefabs de estágios de destruição (ordem: após 1º hit, 2º hit, …).")]
+    [Tooltip("Lista de prefabs de estágios de destruição.")]
     public List<GameObject> destroyStagePrefabs;
 
-    [Header("Efeitos e Áudio")]
-    public List<AudioClip> hitSounds;
-    public List<AudioClip> destroySounds;
+    [Header("Efeitos")]
+    [Tooltip("Prefab de efeito instanciado em cada hit (mudança de estágio).")]
+    public GameObject hitEffectPrefab;
+    [Tooltip("Prefab de efeito instanciado na destruição final.")]
     public GameObject destroyEffectPrefab;
 
-    // flags internas
+    [Header("Áudio")]
+    [Tooltip("Clipes de áudio para hits.")]
+    public List<AudioClip> hitSounds;
+    [Tooltip("Clipes de áudio para destruição.")]
+    public List<AudioClip> destroySounds;
+
+    [Header("Tags de Colisão")]
+    [Tooltip("Tag usada para identificar o martelo.")]
+    public string hammerTag = "Hammer";
+    [Tooltip("Tag usada para identificar o chão.")]
+    public string groundTag = "Ground";
+
+    // Flags internas
     private bool hasLanded = false;
     private bool canBeHit = false;
-
-    // para trocar o modelo
     private int initialDurability;
     private GameObject currentModelInstance;
 
@@ -49,57 +60,42 @@ public class DestructibleItem : MonoBehaviour
                 transform
             );
         }
-        else if (transform.childCount > 0)
-        {
-            currentModelInstance = transform.GetChild(0).gameObject;
-        }
-        else
-        {
-            Debug.LogWarning($"{name}: nenhum modelo inicial atribuído ou filho encontrado.");
-        }
     }
 
     public void ReceiveHit()
     {
-        // mesmo em gameOver, tocamos som de hit
+        // Sempre toca o som de hit, mesmo após game over
         if (hitSounds != null && hitSounds.Count > 0)
         {
             var clip = hitSounds[UnityEngine.Random.Range(0, hitSounds.Count)];
             AudioSource.PlayClipAtPoint(clip, transform.position);
         }
 
-        // sem mais lógica se não aterrissou, ou se é gameOver
-        if (!canBeHit || GameTimer.isGameOver) return;
+        // Efeito de hit
+        if (hitEffectPrefab != null)
+            Instantiate(hitEffectPrefab, transform.position, Quaternion.identity);
+
+        // Se não pousou ou o jogo acabou, não reduz durabilidade
+        if (!canBeHit || GameTimer.isGameOver)
+            return;
 
         durability--;
-        Debug.Log($"{name} recebeu hit. Durabilidade restante: {durability}");
+        Debug.Log($"{name} recebeu hit. Durab.: {durability}/{initialDurability}");
 
         if (durability > 0)
-        {
             UpdateModelStage();
-        }
         else
-        {
             DestroyItem();
-        }
     }
 
     private void UpdateModelStage()
     {
-        int hitsTaken = initialDurability - durability;
-        int stageIndex = hitsTaken - 1; // 1º hit → índice 0, etc.
-
-        if (
-            destroyStagePrefabs != null &&
-            stageIndex >= 0 &&
-            stageIndex < destroyStagePrefabs.Count
-        )
+        int stageIndex = (initialDurability - durability) - 1;
+        if (destroyStagePrefabs != null
+            && stageIndex >= 0
+            && stageIndex < destroyStagePrefabs.Count)
         {
-            // remove modelo antigo
-            if (currentModelInstance != null)
-                Destroy(currentModelInstance);
-
-            // instancia próximo estágio
+            Destroy(currentModelInstance);
             currentModelInstance = Instantiate(
                 destroyStagePrefabs[stageIndex],
                 transform.position,
@@ -112,37 +108,36 @@ public class DestructibleItem : MonoBehaviour
     private void DestroyItem()
     {
         if (GameTimer.isGameOver)
-        {
-            Debug.Log($"{name}: fim de jogo, destruição ignorada.");
             return;
-        }
 
-        Debug.Log($"{name} destruído! +{points} pontos");
+        Debug.Log($"{name} destruído! +{points} pts");
         OnItemDestroyed?.Invoke(points);
 
-        // som de destruição
+        // Efeito de destruição
+        if (destroyEffectPrefab != null)
+            Instantiate(destroyEffectPrefab, transform.position, Quaternion.identity);
+
+        // Som de destruição
         if (destroySounds != null && destroySounds.Count > 0)
         {
             var clip = destroySounds[UnityEngine.Random.Range(0, destroySounds.Count)];
             AudioSource.PlayClipAtPoint(clip, transform.position);
         }
 
-        // efeito visual
-        if (destroyEffectPrefab != null)
-            Instantiate(destroyEffectPrefab, transform.position, Quaternion.identity);
-
         Destroy(gameObject);
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (!hasLanded && collision.gameObject.CompareTag("Ground"))
+        // Pouso no chão
+        if (!hasLanded && collision.gameObject.CompareTag(groundTag))
         {
             hasLanded = true;
             StartCoroutine(EnableHitDetection());
         }
 
-        if (collision.gameObject.CompareTag("Hammer"))
+        // Colisão com martelo
+        if (collision.gameObject.CompareTag(hammerTag))
         {
             ReceiveHit();
         }
