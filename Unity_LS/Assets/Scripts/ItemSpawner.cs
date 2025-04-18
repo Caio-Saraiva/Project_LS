@@ -137,7 +137,9 @@ public class ItemSpawner : MonoBehaviour
         while (spawned < maxItems && attempts < maxAtt)
         {
             attempts++;
-            var pos = GetRandomPositionInCollider(initialSpawnArea);
+            Vector3 pos = GetRandomPositionInCollider(initialSpawnArea);
+
+            // checa distância mínima
             bool tooClose = false;
             foreach (var p in chosen)
                 if (Vector3.Distance(p, pos) < MinDistanceBetweenItems)
@@ -150,14 +152,26 @@ public class ItemSpawner : MonoBehaviour
             var prefab = SelectPrefabByChance();
             if (prefab != null)
             {
-                var obj = Instantiate(prefab, pos, Quaternion.identity);
+                // Instancia já com rotação aleatória
+                Quaternion rot = Quaternion.identity;
+                if (randomRotation)
+                {
+                    int maxStep = Mathf.FloorToInt(360f / randomRotationStep);
+                    float x = randomRotationX ? Random.Range(0, maxStep + 1) * randomRotationStep : 0f;
+                    float y = randomRotationY ? Random.Range(0, maxStep + 1) * randomRotationStep : 0f;
+                    float z = randomRotationZ ? Random.Range(0, maxStep + 1) * randomRotationStep : 0f;
+                    rot = Quaternion.Euler(x, y, z);
+                }
+
+                var obj = Instantiate(prefab, pos, rot);
                 obj.tag = "SpawnedItem";
-                ApplyRandomRotation(obj);
             }
+
             chosen.Add(pos);
             spawned++;
         }
     }
+
 
     Vector3 GetRandomPositionInCollider(BoxCollider col)
     {

@@ -43,8 +43,7 @@ MonoBehaviour:
   m_RendererFeatures:
   - {fileID: 4770309631725296264}
   - {fileID: -8555612030142892012}
-  - {fileID: 6098992832772385814}
-  m_RendererFeatureMap: 885a9cfb558b33421438462b305c4489162c0de5aaf9a354
+  m_RendererFeatureMap: 885a9cfb558b33421438462b305c4489
   m_UseNativeRenderPass: 1
   xrSystemData: {fileID: 0}
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
@@ -91,19 +90,3 @@ MonoBehaviour:
       surfaceData: 2
     screenSpaceSettings:
       normalBlend: 0
---- !u!114 &6098992832772385814
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f405f648076e8f040a4960d01ade4b05, type: 3}
-  m_Name: PixelateFeature
-  m_EditorClassIdentifier: 
-  m_Active: 1
-  settings:
-    renderPassEvent: 550
-    pixelateMaterial: {fileID: 2100000, guid: 9c9603b34f35ce044837f4241d621ee2, type: 2}
