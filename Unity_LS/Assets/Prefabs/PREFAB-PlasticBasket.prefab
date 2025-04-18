@@ -58,6 +58,13 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 0abe841ae5b4f2a4aa0c5f2a9ce92873, type: 3}
   destroySounds:
   - {fileID: 8300000, guid: 0abe841ae5b4f2a4aa0c5f2a9ce92873, type: 3}
+  hammerTag: Hammer
+  groundTag: Ground
+  collisionSize: 0.7
+  collisionSizeTime: 0.2
+  floatingTextUIPrefab: {fileID: 2317378157045882829, guid: 54f2b222e37323f4e8d31172695e9e2b, type: 3}
+  floatingTextUIOffset: {x: 0, y: 1.5, z: 0}
+  floatingTextUIRotOffset: {x: 0, y: 0, z: 0}
 --- !u!65 &8047305774272821515
 BoxCollider:
   m_ObjectHideFlags: 0

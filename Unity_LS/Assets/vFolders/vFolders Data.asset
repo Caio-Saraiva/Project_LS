@@ -32,6 +32,10 @@ MonoBehaviour:
     - 419e5d102c1b97d4ea1e61b9b30a1dc3
     - ebae46c28ae25b2439b1d8b6ce4b9341
     - 8033a88095a4330498bd8f9cb7bb1bb1
+    - f54d1bd14bd3ca042bd867b519fee8cc
+    - e4322c86f77e82847b5d90a63e5862ee
+    - 1e590cf3ee0728c448f96b3e7cbcb61e
+    - 709f11a7f3c4041caa4ef136ea32d874
     values:
     - iconNameOrGuid: 
       colorIndex: 8
@@ -103,6 +107,22 @@ MonoBehaviour:
       isColorRecursive: 0
     - iconNameOrGuid: AudioSource Icon
       colorIndex: 0
+      isIconRecursive: 0
+      isColorRecursive: 0
+    - iconNameOrGuid: 
+      colorIndex: 8
+      isIconRecursive: 0
+      isColorRecursive: 0
+    - iconNameOrGuid: RawImage Icon
+      colorIndex: 0
+      isIconRecursive: 0
+      isColorRecursive: 0
+    - iconNameOrGuid: TerrainData Icon
+      colorIndex: 0
+      isIconRecursive: 0
+      isColorRecursive: 0
+    - iconNameOrGuid: 
+      colorIndex: 1
       isIconRecursive: 0
       isColorRecursive: 0
   bookmarks: []

@@ -8,8 +8,10 @@ public class ItemSpawner : MonoBehaviour
     public BoxCollider spawnArea;
     [Tooltip("Área onde os itens serão spawnados no início do jogo (próximo ao chão).")]
     public BoxCollider initialSpawnArea;
-    [Tooltip("Distância mínima entre itens spawnados inicialmente.")]
-    public float minDistanceBetweenInitialSpawnItems = 1f;
+
+    [Header("Dispersão")]
+    [Tooltip("Distância mínima desejada entre quaisquer dois itens na cena.")]
+    public float MinDistanceBetweenItems = 1f;
 
     [System.Serializable]
     public class SpawnablePrefab
@@ -17,8 +19,7 @@ public class ItemSpawner : MonoBehaviour
         [Tooltip("Prefab a ser spawnado.")]
         public GameObject prefab;
         [Tooltip("Porcentagem (chance) de o prefab ser selecionado.")]
-        [Range(0, 100)]
-        public float spawnChance = 100f;
+        [Range(0, 100)] public float spawnChance = 100f;
     }
 
     [Header("Configuração dos Prefabs")]
@@ -30,17 +31,27 @@ public class ItemSpawner : MonoBehaviour
     public int maxItems = 10;
     [Tooltip("Intervalo de tempo entre cada spawn periódico (em segundos).")]
     public float spawnInterval = 2f;
+    [Tooltip("Número de amostras a tentar para encontrar o local mais vazio.")]
+    public int samplingAttempts = 5;
 
-    // Timer interno para spawn periódico
+    [Header("Random Rotation")]
+    [Tooltip("Habilita rotação aleatória em degraus nos eixos selecionados.")]
+    public bool randomRotation = false;
+    [Tooltip("Permite rotação aleatória no eixo X.")]
+    public bool randomRotationX = false;
+    [Tooltip("Permite rotação aleatória no eixo Y.")]
+    public bool randomRotationY = true;
+    [Tooltip("Permite rotação aleatória no eixo Z.")]
+    public bool randomRotationZ = false;
+    [Tooltip("Tamanho do passo (em graus) para a rotação aleatória.")]
+    public float randomRotationStep = 45f;
+
     private float spawnTimer;
 
     void Start()
     {
-        // Realiza o spawn inicial dos itens no chão
         if (initialSpawnArea != null)
-        {
             SpawnInitialItems();
-        }
     }
 
     void Update()
@@ -53,116 +64,134 @@ public class ItemSpawner : MonoBehaviour
         }
     }
 
-    // Spawn periódico – instancia itens de forma aleatória na área de spawn definida.
     void TrySpawnItem()
     {
-        // Se já houver o número máximo de itens na cena, não spawna nada.
-        GameObject[] currentItems = GameObject.FindGameObjectsWithTag("SpawnedItem");
-        if (currentItems.Length >= maxItems)
-        {
-            Debug.Log("Limite de itens atingido (spawn periódico).");
+        var existing = GameObject.FindGameObjectsWithTag("SpawnedItem");
+        if (existing.Length >= maxItems || spawnArea == null)
             return;
+
+        // Coleta posições XZ dos itens já no chão
+        List<Vector2> existingXZ = new List<Vector2>(existing.Length);
+        foreach (var go in existing)
+        {
+            var p = go.transform.position;
+            existingXZ.Add(new Vector2(p.x, p.z));
         }
 
-        if (spawnArea == null)
+        Vector3 bestPos = Vector3.zero;
+        float bestScore = -1f;
+
+        // Amostras para encontrar posição mais longe
+        for (int i = 0; i < samplingAttempts; i++)
         {
-            Debug.LogWarning("Área de Spawn não definida!");
-            return;
+            Vector3 candidate = GetRandomPositionInCollider(spawnArea);
+            Vector2 c2 = new Vector2(candidate.x, candidate.z);
+
+            // Distância mínima até qualquer item existente
+            float minDist = float.MaxValue;
+            foreach (var e in existingXZ)
+            {
+                float d = Vector2.Distance(c2, e);
+                if (d < minDist) minDist = d;
+            }
+            // Se não houver itens, treat as infinite
+            if (existingXZ.Count == 0) minDist = float.MaxValue;
+
+            // Se passar do threshold, escolhe imediatamente
+            if (minDist >= MinDistanceBetweenItems)
+            {
+                bestPos = candidate;
+                bestScore = minDist;
+                break;
+            }
+
+            // Senão, mantém melhor candidato
+            if (minDist > bestScore)
+            {
+                bestScore = minDist;
+                bestPos = candidate;
+            }
         }
 
-        Vector3 randomPosition = GetRandomPositionInCollider(spawnArea);
-        GameObject prefabToSpawn = SelectPrefabByChance();
-        if (prefabToSpawn == null)
-        {
-            Debug.LogWarning("Nenhum prefab selecionado para spawn.");
-            return;
-        }
+        // Instancia
+        var prefab = SelectPrefabByChance();
+        if (prefab == null) return;
 
-        GameObject spawnedItem = Instantiate(prefabToSpawn, randomPosition, Quaternion.identity);
-        spawnedItem.tag = "SpawnedItem";
-        Debug.Log("Spawned (periódico): " + spawnedItem.name + " at " + randomPosition);
+        var obj = Instantiate(prefab, bestPos, Quaternion.identity);
+        obj.tag = "SpawnedItem";
+        ApplyRandomRotation(obj);
 
-        // Aplica um impulso aleatório para evitar empilhamento muito rígido
-        Rigidbody rb = spawnedItem.GetComponent<Rigidbody>();
+        // Pequeno impulso
+        var rb = obj.GetComponent<Rigidbody>();
         if (rb != null)
-        {
-            Vector3 randomImpulse = new Vector3(Random.Range(-2f, 2f), 0, Random.Range(-2f, 2f));
-            rb.AddForce(randomImpulse, ForceMode.Impulse);
-        }
+            rb.AddForce(new Vector3(
+                Random.Range(-2f, 2f), 0, Random.Range(-2f, 2f)
+            ), ForceMode.Impulse);
     }
 
-    // Spawn inicial – instancia itens na área inicial (próximo ao chão) até atingir o limite.
     void SpawnInitialItems()
     {
-        List<Vector3> chosenPositions = new List<Vector3>();
-        int spawnedCount = 0;
-        int attempts = 0;
-        int maxAttempts = maxItems * 10; // para evitar loop infinito se não encontrar posições válidas
+        var chosen = new List<Vector3>();
+        int spawned = 0, attempts = 0, maxAtt = maxItems * 10;
 
-        while (spawnedCount < maxItems && attempts < maxAttempts)
+        while (spawned < maxItems && attempts < maxAtt)
         {
             attempts++;
-            Vector3 candidatePos = GetRandomPositionInCollider(initialSpawnArea);
-
-            // Verifica se a posição candidata está distante o suficiente dos itens já posicionados
+            var pos = GetRandomPositionInCollider(initialSpawnArea);
             bool tooClose = false;
-            foreach (Vector3 pos in chosenPositions)
-            {
-                if (Vector3.Distance(candidatePos, pos) < minDistanceBetweenInitialSpawnItems)
+            foreach (var p in chosen)
+                if (Vector3.Distance(p, pos) < MinDistanceBetweenItems)
                 {
                     tooClose = true;
                     break;
                 }
-            }
+            if (tooClose) continue;
 
-            if (!tooClose)
+            var prefab = SelectPrefabByChance();
+            if (prefab != null)
             {
-                chosenPositions.Add(candidatePos);
-                GameObject prefabToSpawn = SelectPrefabByChance();
-                if (prefabToSpawn != null)
-                {
-                    GameObject spawnedItem = Instantiate(prefabToSpawn, candidatePos, Quaternion.identity);
-                    spawnedItem.tag = "SpawnedItem";
-                    Debug.Log("Initial Spawned: " + spawnedItem.name + " at " + candidatePos);
-                }
-                spawnedCount++;
+                var obj = Instantiate(prefab, pos, Quaternion.identity);
+                obj.tag = "SpawnedItem";
+                ApplyRandomRotation(obj);
             }
+            chosen.Add(pos);
+            spawned++;
         }
     }
 
-    // Retorna uma posição aleatória dentro dos limites do BoxCollider fornecido.
     Vector3 GetRandomPositionInCollider(BoxCollider col)
     {
-        Vector3 min = col.bounds.min;
-        Vector3 max = col.bounds.max;
-        Vector3 randPos = new Vector3(
-            Random.Range(min.x, max.x),
-            Random.Range(min.y, max.y),
-            Random.Range(min.z, max.z)
+        var mn = col.bounds.min;
+        var mx = col.bounds.max;
+        return new Vector3(
+            Random.Range(mn.x, mx.x),
+            Random.Range(mn.y, mx.y),
+            Random.Range(mn.z, mx.z)
         );
-        return randPos;
     }
 
-    // Seleciona um prefab com base em chances ponderadas.
     GameObject SelectPrefabByChance()
     {
-        float totalChance = 0f;
+        float tot = 0f;
+        foreach (var sp in spawnablePrefabs) tot += sp.spawnChance;
+        if (tot <= 0f) return null;
+        float r = Random.Range(0f, tot), acc = 0f;
         foreach (var sp in spawnablePrefabs)
         {
-            totalChance += sp.spawnChance;
-        }
-
-        if (totalChance <= 0)
-            return null;
-
-        float randomValue = Random.Range(0f, totalChance);
-        float cumulative = 0f;
-        foreach (var sp in spawnablePrefabs)
-        {
-            cumulative += sp.spawnChance;
-            if (randomValue <= cumulative)
-                return sp.prefab;
+            acc += sp.spawnChance;
+            if (r <= acc) return sp.prefab;
         }
         return null;
+    }
+
+    void ApplyRandomRotation(GameObject obj)
+    {
+        if (!randomRotation) return;
+        int maxStep = Mathf.FloorToInt(360f / randomRotationStep);
+        float x = 0, y = 0, z = 0;
+        if (randomRotationX) x = Random.Range(0, maxStep + 1) * randomRotationStep;
+        if (randomRotationY) y = Random.Range(0, maxStep + 1) * randomRotationStep;
+        if (randomRotationZ) z = Random.Range(0, maxStep + 1) * randomRotationStep;
+        obj.transform.rotation = Quaternion.Euler(x, y, z);
     }
 }
