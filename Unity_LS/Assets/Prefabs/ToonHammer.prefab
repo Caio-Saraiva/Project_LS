@@ -51,6 +51,8 @@ MonoBehaviour:
   initialRotationEuler: {x: 0, y: 180, z: 0}
   finalRotationEuler: {x: -90, y: 180, z: 0}
   animationDuration: 0.1
+  whackActions:
+  - {fileID: -3996639513927419549, guid: 5d7733ccbd24bfc49a36f901eb0476f8, type: 3}
 --- !u!33 &2603059853011567477
 MeshFilter:
   m_ObjectHideFlags: 0

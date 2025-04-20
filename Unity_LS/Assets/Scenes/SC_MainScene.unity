@@ -807,7 +807,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: ver-0.1.9
+  m_text: ver-0.2.0
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: ae9f8d1ddd45b504880411a9674676dc, type: 2}
   m_sharedMaterial: {fileID: 6324440715400325035, guid: ae9f8d1ddd45b504880411a9674676dc, type: 2}
@@ -886,39 +886,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 770213354}
   m_CullTransparentMesh: 1
---- !u!21 &773190229
-Material:
-  serializedVersion: 8
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: PixelCorners/PixelRoundedCorners
-  m_Shader: {fileID: 4800000, guid: 3ffa892c5904391418d1428f2d807d03, type: 3}
-  m_Parent: {fileID: 0}
-  m_ModifiedSerializedProperties: 0
-  m_ValidKeywords: []
-  m_InvalidKeywords: []
-  m_LightmapFlags: 4
-  m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_LockedProperties: 
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs:
-    - _MainTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    m_Ints: []
-    m_Floats: []
-    m_Colors:
-    - _WidthHeightRadiusDensity: {r: 500, g: 100, b: 50, a: 5}
-  m_BuildTextureStacks: []
-  m_AllowLocking: 1
 --- !u!1 &803866244
 GameObject:
   m_ObjectHideFlags: 0
@@ -985,7 +952,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 1964602097}
+  m_Material: {fileID: 2030333398}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
@@ -1060,6 +1027,39 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!21 &1083873675
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: PixelCorners/PixelRoundedCorners
+  m_Shader: {fileID: 4800000, guid: 3ffa892c5904391418d1428f2d807d03, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats: []
+    m_Colors:
+    - _WidthHeightRadiusDensity: {r: 500, g: 100, b: 50, a: 5}
+  m_BuildTextureStacks: []
+  m_AllowLocking: 1
 --- !u!1 &1176776589
 GameObject:
   m_ObjectHideFlags: 0
@@ -1126,7 +1126,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 773190229}
+  m_Material: {fileID: 1083873675}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
@@ -1289,13 +1289,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36d6cdfd75a61c14791314c922e6aa9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cursorPrefab: {fileID: 6111284776646681215, guid: f7731a13f1886a647b4d3cbe927662d1, type: 3}
   mode: 1
+  cursorPrefab: {fileID: 6111284776646681215, guid: f7731a13f1886a647b4d3cbe927662d1, type: 3}
   distanceFromCamera: 10
   positionOffset: {x: 0, y: 0.6, z: 0}
   rotationOffset: {x: 0, y: 180, z: 0}
   cursorScale: {x: 1, y: 1, z: 1}
   movementBounds: {fileID: 730520812}
+  moveActions:
+  - {fileID: 8783125186146395835, guid: 5d7733ccbd24bfc49a36f901eb0476f8, type: 3}
+  gamepadSpeed: 1000
+  moveDeadzone: 0.2
 --- !u!4 &1277672352
 Transform:
   m_ObjectHideFlags: 0
@@ -2062,6 +2066,7 @@ GameObject:
   - component: {fileID: 1819066785}
   - component: {fileID: 1819066784}
   - component: {fileID: 1819066786}
+  - component: {fileID: 1819066787}
   m_Layer: 0
   m_Name: GameMechanics
   m_TagString: Untagged
@@ -2154,6 +2159,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   versionText: {fileID: 770213356}
+--- !u!114 &1819066787
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1819066780}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8cda59c07aa7be478e93d3fc150a644, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  axisDeadzone: 0.2
+  axisNames:
+  - Horizontal
+  - Vertical
+  buttonKeys: 4a0100004b0100004c0100004d0100004e0100004f010000500100005101000052010000530100005401000055010000560100005701000058010000590100005a0100005b0100005c0100005d010000
 --- !u!1 &1901461803
 GameObject:
   m_ObjectHideFlags: 0
@@ -2325,7 +2347,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1950412691}
   m_CullTransparentMesh: 1
---- !u!21 &1964602097
+--- !u!21 &2030333398
 Material:
   serializedVersion: 8
   m_ObjectHideFlags: 0

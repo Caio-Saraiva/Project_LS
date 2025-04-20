@@ -36,6 +36,7 @@ MonoBehaviour:
     - e4322c86f77e82847b5d90a63e5862ee
     - 1e590cf3ee0728c448f96b3e7cbcb61e
     - 709f11a7f3c4041caa4ef136ea32d874
+    - f3f1f674d23c1e143a3d17eabb3a339c
     values:
     - iconNameOrGuid: 
       colorIndex: 8
@@ -123,6 +124,10 @@ MonoBehaviour:
       isColorRecursive: 0
     - iconNameOrGuid: 
       colorIndex: 1
+      isIconRecursive: 0
+      isColorRecursive: 0
+    - iconNameOrGuid: AssemblyDefinitionAsset Icon
+      colorIndex: 0
       isIconRecursive: 0
       isColorRecursive: 0
   bookmarks: []

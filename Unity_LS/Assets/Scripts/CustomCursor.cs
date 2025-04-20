@@ -1,68 +1,128 @@
+Ôªøusing System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class CustomCursor : MonoBehaviour
 {
-    public enum CursorMode
-    {
-        PanelMode,      // XY via ScreenToWorldPoint
-        HorizontalMode  // XZ via Raycast num plano
-    }
+    public enum CursorMode { PanelMode, HorizontalMode }
 
-    [Header("ConfiguraÁ„o do Cursor")]
-    public GameObject cursorPrefab;
+    [Header("Cursor Config")]
     public CursorMode mode = CursorMode.PanelMode;
+    [Tooltip("Prefab que ser√° usado como cursor (3D)")]
+    public GameObject cursorPrefab;
+    [Tooltip("Dist√¢ncia da c√¢mera (XY mode)")]
     public float distanceFromCamera = 10f;
 
-    [Header("CustomizaÁ„o do Transform")]
+    [Header("Transform Custom")]
     public Vector3 positionOffset = Vector3.zero;
     public Vector3 rotationOffset = Vector3.zero;
     public Vector3 cursorScale = Vector3.one;
 
-    [Header("Limites de Movimento")]
-    [Tooltip("BoxCollider (n„o-isTrigger) que define a ·rea onde o martelo pode se mover")]
+    [Header("Movement Bounds")]
+    [Tooltip("BoxCollider (n√£o-isTrigger) para limitar o cursor")]
     public BoxCollider movementBounds;
 
-    private GameObject cursorInstance;
+    [Header("A√ß√µes de Movimento")]
+    [Tooltip("Arraste aqui suas InputActions do tipo Vector2 (p.ex. LeftStick)")]
+    public List<InputActionReference> moveActions;
+    [Tooltip("Sensibilidade (pixeis/s) ao usar gamepad")]
+    public float gamepadSpeed = 1000f;
+    [Tooltip("Deadzone abaixo da qual ignora o input do stick")]
+    public float moveDeadzone = 0.2f;
+
+    GameObject cursorInstance;
+    Camera cam;
+    Vector2 screenPos;
+    bool usingGamepad;
+
+    void OnEnable()
+    {
+        foreach (var ar in moveActions)
+            ar.action.Enable();
+    }
+
+    void OnDisable()
+    {
+        foreach (var ar in moveActions)
+            ar.action.Disable();
+    }
 
     void Start()
     {
         Cursor.visible = false;
+        cam = Camera.main;
+        screenPos = Mouse.current != null
+            ? Mouse.current.position.ReadValue()
+            : new Vector2(Screen.width / 2, Screen.height / 2);
+
         if (cursorPrefab != null)
         {
-            cursorInstance = Instantiate(cursorPrefab, Vector3.zero, Quaternion.Euler(rotationOffset));
+            cursorInstance = Instantiate(cursorPrefab,
+                                         Vector3.zero,
+                                         Quaternion.Euler(rotationOffset));
             cursorInstance.transform.localScale = cursorScale;
         }
-        else Debug.LogError("Cursor Prefab n„o atribuÌdo!");
+        else Debug.LogError("Cursor Prefab n√£o atribu√≠do!");
     }
 
     void Update()
     {
+        // l√™ o somat√≥rio de todos os bindings de move
+        Vector2 gp = Vector2.zero;
+        foreach (var ar in moveActions)
+            gp += ar.action.ReadValue<Vector2>();
+
+        // detecta se estamos usando stick ou mouse
+        if (gp.magnitude > moveDeadzone)
+            usingGamepad = true;
+        else if (Mouse.current != null &&
+                 Mouse.current.delta.ReadValue() != Vector2.zero)
+            usingGamepad = false;
+
+        // aplica o movimento
+        if (usingGamepad)
+            MoveWithGamepad(gp);
+        else
+            MoveWithMouse();
+    }
+
+    void MoveWithMouse()
+    {
+        screenPos = Mouse.current.position.ReadValue();
+        UpdateInstancePosition();
+    }
+
+    void MoveWithGamepad(Vector2 gp)
+    {
+        screenPos += gp * (gamepadSpeed * Time.deltaTime);
+        screenPos.x = Mathf.Clamp(screenPos.x, 0, Screen.width);
+        screenPos.y = Mathf.Clamp(screenPos.y, 0, Screen.height);
+        UpdateInstancePosition();
+    }
+
+    void UpdateInstancePosition()
+    {
         if (cursorInstance == null) return;
 
-        Vector3 computedPosition = Vector3.zero;
+        Vector3 worldPos = Vector3.zero;
         if (mode == CursorMode.PanelMode)
         {
-            Vector3 m = Input.mousePosition;
-            m.z = distanceFromCamera;
-            computedPosition = Camera.main.ScreenToWorldPoint(m);
+            var m = new Vector3(screenPos.x, screenPos.y, distanceFromCamera);
+            worldPos = cam.ScreenToWorldPoint(m);
         }
-        else // HorizontalMode
+        else
         {
-            Plane p = new Plane(Vector3.up, Vector3.zero);
-            Ray r = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (p.Raycast(r, out float d))
-                computedPosition = r.GetPoint(d);
+            var plane = new Plane(Vector3.up, Vector3.zero);
+            var ray = cam.ScreenPointToRay(screenPos);
+            if (plane.Raycast(ray, out var d))
+                worldPos = ray.GetPoint(d);
         }
 
-        // offset e clamp
-        computedPosition += positionOffset;
+        worldPos += positionOffset;
         if (movementBounds != null)
-        {
-            // Garante que fique dentro do box (se estiver fora, trunca para a borda)
-            computedPosition = movementBounds.ClosestPoint(computedPosition);
-        }
+            worldPos = movementBounds.ClosestPoint(worldPos);
 
-        cursorInstance.transform.position = computedPosition;
+        cursorInstance.transform.position = worldPos;
         cursorInstance.transform.rotation = Quaternion.Euler(rotationOffset);
     }
 }
