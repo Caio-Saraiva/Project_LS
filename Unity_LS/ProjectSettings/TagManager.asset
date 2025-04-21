@@ -7,6 +7,7 @@ TagManager:
   - Hammer
   - SpawnedItem
   - Ground
+  - 3DButton
   layers:
   - Default
   - TransparentFX

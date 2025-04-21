@@ -15,6 +15,7 @@ MonoBehaviour:
   sceneDatas_byGuid:
     keys:
     - 99c9720ab356a0642a771bea13969a05
+    - 1931c88e06604784d8cdbe0e0dc58e32
     values:
     - goDatas_byGlobalId:
         keys:
@@ -32,6 +33,9 @@ MonoBehaviour:
         - globalObjectIdString: GlobalObjectId_V1-2-99c9720ab356a0642a771bea13969a05-770213354-0
         - globalObjectIdString: GlobalObjectId_V1-2-99c9720ab356a0642a771bea13969a05-730520810-0
         - globalObjectIdString: GlobalObjectId_V1-2-99c9720ab356a0642a771bea13969a05-204925669-0
+        - globalObjectIdString: GlobalObjectId_V1-2-99c9720ab356a0642a771bea13969a05-980125681-0
+        - globalObjectIdString: GlobalObjectId_V1-2-99c9720ab356a0642a771bea13969a05-1942806708-0
+        - globalObjectIdString: GlobalObjectId_V1-2-99c9720ab356a0642a771bea13969a05-1074837492-0
         values:
         - colorIndex: 5
           iconNameOrGuid: Canvas Icon
@@ -61,3 +65,18 @@ MonoBehaviour:
           iconNameOrGuid: MeshCollider Icon
         - colorIndex: 8
           iconNameOrGuid: PreMatQuad
+        - colorIndex: 2
+          iconNameOrGuid: 
+        - colorIndex: 3
+          iconNameOrGuid: AudioClip Icon
+        - colorIndex: 3
+          iconNameOrGuid: AudioClip Icon
+    - goDatas_byGlobalId:
+        keys:
+        - globalObjectIdString: GlobalObjectId_V1-1-1931c88e06604784d8cdbe0e0dc58e32-5441832558212438119-0
+        - globalObjectIdString: GlobalObjectId_V1-1-1931c88e06604784d8cdbe0e0dc58e32-8250815455844363557-0
+        values:
+        - colorIndex: 2
+          iconNameOrGuid: 
+        - colorIndex: 2
+          iconNameOrGuid: 
