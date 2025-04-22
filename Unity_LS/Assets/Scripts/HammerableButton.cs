@@ -29,11 +29,8 @@ public class HammerableButton : MonoBehaviour
     public float collisionSize = 0.85f;
     [Tooltip("Tempo total de ida e volta do squish")]
     public float collisionSizeTime = 0.2f;
-    [Tooltip("Aplicar squish no eixo X")]
     public bool squishX = true;
-    [Tooltip("Aplicar squish no eixo Y")]
     public bool squishY = true;
-    [Tooltip("Aplicar squish no eixo Z")]
     public bool squishZ = true;
 
     [Header("Events")]
@@ -57,11 +54,20 @@ public class HammerableButton : MonoBehaviour
             Debug.LogWarning("HammerableButton: modelo não instanciado.");
     }
 
+    void OnEnable()
+    {
+        // sempre que o GameObject for reativado:
+        _isPressed = false;
+
+        // e garante que o modelo volte à escala original
+        if (currentModelInstance != null)
+            currentModelInstance.transform.localScale = _modelInitialScale;
+    }
+
     void SpawnInitialModel()
     {
         if (originalModelPrefab == null) return;
 
-        // calcula posição/rotação/escala com offset local
         Vector3 spawnPos = transform.TransformPoint(modelPositionOffset);
         Quaternion spawnRot = transform.rotation * Quaternion.Euler(modelRotationOffset);
 
@@ -74,12 +80,11 @@ public class HammerableButton : MonoBehaviour
 
         // aplica multiplicador de escala
         var baseScale = currentModelInstance.transform.localScale;
-        currentModelInstance.transform.localScale =
-            new Vector3(
-                baseScale.x * modelScaleOffset.x,
-                baseScale.y * modelScaleOffset.y,
-                baseScale.z * modelScaleOffset.z
-            );
+        currentModelInstance.transform.localScale = new Vector3(
+            baseScale.x * modelScaleOffset.x,
+            baseScale.y * modelScaleOffset.y,
+            baseScale.z * modelScaleOffset.z
+        );
     }
 
     public void ReceiveHit()
