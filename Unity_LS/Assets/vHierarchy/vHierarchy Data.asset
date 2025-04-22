@@ -16,6 +16,10 @@ MonoBehaviour:
     keys:
     - 99c9720ab356a0642a771bea13969a05
     - 1931c88e06604784d8cdbe0e0dc58e32
+    - d3c323d3e6cc07c4181f4a27615855a8
+    - 6463f5aac83df324988592941eb533d1
+    - 8ad0d30728796f549b991ae7c0fa6b14
+    - c94f27afc8d044e4d9569352e21dee66
     values:
     - goDatas_byGlobalId:
         keys:
@@ -36,6 +40,9 @@ MonoBehaviour:
         - globalObjectIdString: GlobalObjectId_V1-2-99c9720ab356a0642a771bea13969a05-980125681-0
         - globalObjectIdString: GlobalObjectId_V1-2-99c9720ab356a0642a771bea13969a05-1942806708-0
         - globalObjectIdString: GlobalObjectId_V1-2-99c9720ab356a0642a771bea13969a05-1074837492-0
+        - globalObjectIdString: GlobalObjectId_V1-2-99c9720ab356a0642a771bea13969a05-1285687194-0
+        - globalObjectIdString: GlobalObjectId_V1-2-99c9720ab356a0642a771bea13969a05-458335964-0
+        - globalObjectIdString: GlobalObjectId_V1-2-99c9720ab356a0642a771bea13969a05-973124956-0
         values:
         - colorIndex: 5
           iconNameOrGuid: Canvas Icon
@@ -71,6 +78,12 @@ MonoBehaviour:
           iconNameOrGuid: AudioClip Icon
         - colorIndex: 3
           iconNameOrGuid: AudioClip Icon
+        - colorIndex: 7
+          iconNameOrGuid: PreMatCube
+        - colorIndex: 5
+          iconNameOrGuid: Canvas Icon
+        - colorIndex: 7
+          iconNameOrGuid: PreMatCube
     - goDatas_byGlobalId:
         keys:
         - globalObjectIdString: GlobalObjectId_V1-1-1931c88e06604784d8cdbe0e0dc58e32-5441832558212438119-0
@@ -79,4 +92,43 @@ MonoBehaviour:
         - colorIndex: 2
           iconNameOrGuid: 
         - colorIndex: 2
+          iconNameOrGuid: 
+    - goDatas_byGlobalId:
+        keys:
+        - globalObjectIdString: GlobalObjectId_V1-1-d3c323d3e6cc07c4181f4a27615855a8-6923111651292879676-0
+        - globalObjectIdString: GlobalObjectId_V1-1-d3c323d3e6cc07c4181f4a27615855a8-2184741469067343666-0
+        values:
+        - colorIndex: 2
+          iconNameOrGuid: 
+        - colorIndex: 2
+          iconNameOrGuid: 
+    - goDatas_byGlobalId:
+        keys:
+        - globalObjectIdString: GlobalObjectId_V1-1-6463f5aac83df324988592941eb533d1-7617960626304799535-0
+        - globalObjectIdString: GlobalObjectId_V1-1-6463f5aac83df324988592941eb533d1-4459772828855759068-0
+        - globalObjectIdString: GlobalObjectId_V1-1-6463f5aac83df324988592941eb533d1-564649120852111479-0
+        values:
+        - colorIndex: 2
+          iconNameOrGuid: 
+        - colorIndex: 2
+          iconNameOrGuid: 
+        - colorIndex: 2
+          iconNameOrGuid: 
+    - goDatas_byGlobalId:
+        keys:
+        - globalObjectIdString: GlobalObjectId_V1-1-8ad0d30728796f549b991ae7c0fa6b14-6494671113722354579-0
+        - globalObjectIdString: GlobalObjectId_V1-1-8ad0d30728796f549b991ae7c0fa6b14-8449479474741881693-0
+        values:
+        - colorIndex: 2
+          iconNameOrGuid: 
+        - colorIndex: 2
+          iconNameOrGuid: 
+    - goDatas_byGlobalId:
+        keys:
+        - globalObjectIdString: GlobalObjectId_V1-1-c94f27afc8d044e4d9569352e21dee66-4228620566205074847-0
+        - globalObjectIdString: GlobalObjectId_V1-1-c94f27afc8d044e4d9569352e21dee66-2855137108856757655-0
+        values:
+        - colorIndex: 8
+          iconNameOrGuid: 
+        - colorIndex: 8
           iconNameOrGuid: 
