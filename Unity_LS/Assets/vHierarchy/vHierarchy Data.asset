@@ -55,6 +55,13 @@ MonoBehaviour:
         - globalObjectIdString: GlobalObjectId_V1-2-99c9720ab356a0642a771bea13969a05-1465328163-0
         - globalObjectIdString: GlobalObjectId_V1-2-99c9720ab356a0642a771bea13969a05-903993725-0
         - globalObjectIdString: GlobalObjectId_V1-2-99c9720ab356a0642a771bea13969a05-757421305-0
+        - globalObjectIdString: GlobalObjectId_V1-2-99c9720ab356a0642a771bea13969a05-1262023255-0
+        - globalObjectIdString: GlobalObjectId_V1-2-99c9720ab356a0642a771bea13969a05-2076902265-0
+        - globalObjectIdString: GlobalObjectId_V1-2-99c9720ab356a0642a771bea13969a05-2043138072-0
+        - globalObjectIdString: GlobalObjectId_V1-2-99c9720ab356a0642a771bea13969a05-1134965660-0
+        - globalObjectIdString: GlobalObjectId_V1-2-99c9720ab356a0642a771bea13969a05-308839607-0
+        - globalObjectIdString: GlobalObjectId_V1-2-99c9720ab356a0642a771bea13969a05-1039597370-0
+        - globalObjectIdString: GlobalObjectId_V1-2-99c9720ab356a0642a771bea13969a05-1637995745-0
         values:
         - colorIndex: 5
           iconNameOrGuid: Canvas Icon
@@ -116,6 +123,20 @@ MonoBehaviour:
           iconNameOrGuid: MeshCollider Icon
         - colorIndex: 1
           iconNameOrGuid: ScriptableObject Icon
+        - colorIndex: 5
+          iconNameOrGuid: Canvas Icon
+        - colorIndex: 7
+          iconNameOrGuid: PreMatCube
+        - colorIndex: 5
+          iconNameOrGuid: Canvas Icon
+        - colorIndex: 1
+          iconNameOrGuid: StandaloneInputModule Icon
+        - colorIndex: 7
+          iconNameOrGuid: PreMatCube
+        - colorIndex: 5
+          iconNameOrGuid: Canvas Icon
+        - colorIndex: 5
+          iconNameOrGuid: Canvas Icon
     - goDatas_byGlobalId:
         keys:
         - globalObjectIdString: GlobalObjectId_V1-1-1931c88e06604784d8cdbe0e0dc58e32-5441832558212438119-0

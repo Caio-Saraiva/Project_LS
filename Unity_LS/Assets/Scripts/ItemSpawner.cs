@@ -48,12 +48,6 @@ public class ItemSpawner : MonoBehaviour
 
     private float spawnTimer;
 
-    void Start()
-    {
-        if (initialSpawnArea != null)
-            SpawnInitialItems();
-    }
-
     void Update()
     {
         spawnTimer += Time.deltaTime;
@@ -62,6 +56,12 @@ public class ItemSpawner : MonoBehaviour
             spawnTimer = 0f;
             TrySpawnItem();
         }
+    }
+
+    public void CheckSpawnArea()
+    {
+        if (initialSpawnArea != null)
+            SpawnInitialItems();
     }
 
     void TrySpawnItem()
@@ -129,7 +129,7 @@ public class ItemSpawner : MonoBehaviour
             ), ForceMode.Impulse);
     }
 
-    void SpawnInitialItems()
+    public void SpawnInitialItems()
     {
         var chosen = new List<Vector3>();
         int spawned = 0, attempts = 0, maxAtt = maxItems * 10;

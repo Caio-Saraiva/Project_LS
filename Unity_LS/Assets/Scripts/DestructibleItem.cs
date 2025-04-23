@@ -7,6 +7,21 @@ public class DestructibleItem : MonoBehaviour
 {
     public static event Action<int> OnItemDestroyed;
 
+    // =======================
+    // CONTROLE GLOBAL
+    // =======================
+    private static bool _destructibleEnabled = false;
+    /// <summary>
+    /// Liga/desliga o modo destrutível para TODOS os itens.
+    /// </summary>
+    public static void SetDestructibleEnabled(bool enabled)
+    {
+        _destructibleEnabled = enabled;
+    }
+
+    // =======================
+    // INSPECTOR FIELDS
+    // =======================
     [Header("Durabilidade & Pontos")]
     [Tooltip("Número de hits necessários para destruir o item.")]
     public int durability = 3;
@@ -14,34 +29,47 @@ public class DestructibleItem : MonoBehaviour
     public int points = 100;
 
     [Header("Modelos 3D")]
+    [Tooltip("Modelo inicial do item.")]
     public GameObject originalModelPrefab;
+    [Tooltip("Modelos para cada estágio de destruição (durability-1 itens).")]
     public List<GameObject> destroyStagePrefabs;
 
     [Header("Efeitos & Áudio")]
+    [Tooltip("Prefab de efeito (partículas) ao receber hit.")]
     public GameObject hitEffectPrefab;
+    [Tooltip("Prefab de efeito ao ser destruído.")]
     public GameObject destroyEffectPrefab;
+    [Tooltip("Sons aleatórios ao receber hit.")]
     public List<AudioClip> hitSounds;
+    [Tooltip("Sons aleatórios ao ser destruído.")]
     public List<AudioClip> destroySounds;
 
     [Header("Tags de Colisão")]
+    [Tooltip("Tag usada para identificar o martelo.")]
     public string hammerTag = "Hammer";
+    [Tooltip("Tag usada para identificar o chão.")]
     public string groundTag = "Ground";
 
     [Header("Feedback de Escala ao Hit")]
-    [Range(0.1f, 1f)] public float collisionSize = 0.85f;
+    [Range(0.1f, 1f)]
+    [Tooltip("Escala relativa ao original durante o hit (1 = sem alteração).")]
+    public float collisionSize = 0.85f;
+    [Tooltip("Duração total do efeito de squish (ida e volta).")]
     public float collisionSizeTime = 0.2f;
 
     [Header("Floating Points UI")]
-    [Tooltip("Prefab de FloatingTextUI (Canvas WS + TextMeshProUGUI).")]
+    [Tooltip("Prefab de FloatingTextUI (Canvas WS + TextMeshProUGUI) para mostrar pontos.")]
     public GameObject floatingTextUIPrefab;
     [Tooltip("Offset em Y para posicionar o texto acima do item.")]
     public Vector3 floatingTextUIOffset = new Vector3(0, 1.5f, 0);
     [Tooltip("Rotação extra em Euler para o texto billboard.")]
     public Vector3 floatingTextUIRotOffset = Vector3.zero;
 
-    // estado interno
-    bool hasLanded;
-    bool canBeHit;
+    // =======================
+    // ESTADO INTERNO
+    // =======================
+    bool hasLanded = false;
+    bool canBeHit = false;
     int initialDurability;
     Vector3 initialScale;
     GameObject currentModelInstance;
@@ -55,39 +83,43 @@ public class DestructibleItem : MonoBehaviour
 
     void SpawnInitialModel()
     {
-        if (originalModelPrefab != null)
-        {
-            currentModelInstance = Instantiate(
-                originalModelPrefab,
-                transform.position,
-                transform.rotation,
-                transform
-            );
-        }
+        if (originalModelPrefab == null) return;
+        currentModelInstance = Instantiate(
+            originalModelPrefab,
+            transform.position,
+            transform.rotation,
+            transform
+        );
     }
 
+    /// <summary>
+    /// Deve ser chamado ao detectar hit (colisão com martelo).
+    /// </summary>
     public void ReceiveHit()
     {
-        // 1) som de hit
+        // Toca som de hit
         if (hitSounds != null && hitSounds.Count > 0)
-            AudioSource.PlayClipAtPoint(
-                hitSounds[UnityEngine.Random.Range(0, hitSounds.Count)],
-                transform.position
-            );
+        {
+            var clip = hitSounds[UnityEngine.Random.Range(0, hitSounds.Count)];
+            AudioSource.PlayClipAtPoint(clip, transform.position);
+        }
 
-        // 2) efeito de hit
+        // Efeito visual de hit
         if (hitEffectPrefab != null)
             Instantiate(hitEffectPrefab, transform.position, Quaternion.identity);
 
-        // 3) pulso suave de escala
+        // Feedback de escala
         StartCoroutine(ScalePulse());
 
-        // 4) só desconta durabilidade se já pousou e não for game over
-        if (!canBeHit || GameTimer.isGameOver) return;
+        // Se não estiver pronto ou destrutível desativado ou game over, aborta
+        if (!canBeHit || !_destructibleEnabled || GameTimer.isGameOver)
+            return;
 
+        // Decrementa durabilidade
         durability--;
-        Debug.Log($"{name} recebeu hit. Durabilidade: {durability}/{initialDurability}");
+        Debug.Log($"{name} recebeu hit. Durabilidade restante: {durability}/{initialDurability}");
 
+        // Atualiza estágio ou destrói
         if (durability > 0)
             UpdateModelStage();
         else
@@ -100,7 +132,7 @@ public class DestructibleItem : MonoBehaviour
         Vector3 target = initialScale * collisionSize;
         float t = 0f;
 
-        // encolher
+        // Encolhe
         while (t < half)
         {
             t += Time.deltaTime;
@@ -108,7 +140,7 @@ public class DestructibleItem : MonoBehaviour
             yield return null;
         }
 
-        // crescer de volta
+        // Volta ao normal
         t = 0f;
         while (t < half)
         {
@@ -123,9 +155,8 @@ public class DestructibleItem : MonoBehaviour
     void UpdateModelStage()
     {
         int idx = (initialDurability - durability) - 1;
-        if (destroyStagePrefabs != null
-            && idx >= 0
-            && idx < destroyStagePrefabs.Count)
+        if (destroyStagePrefabs != null &&
+            idx >= 0 && idx < destroyStagePrefabs.Count)
         {
             if (currentModelInstance != null)
                 Destroy(currentModelInstance);
@@ -141,17 +172,23 @@ public class DestructibleItem : MonoBehaviour
 
     void DestroyItem()
     {
-        if (GameTimer.isGameOver) return;
+        // Som de destruição
+        if (destroySounds != null && destroySounds.Count > 0)
+        {
+            var clip = destroySounds[UnityEngine.Random.Range(0, destroySounds.Count)];
+            AudioSource.PlayClipAtPoint(clip, transform.position);
+        }
 
-        Debug.Log($"{name} destruído! +{points} pts");
-        OnItemDestroyed?.Invoke(points);
+        // Efeito de destruição
+        if (destroyEffectPrefab != null)
+            Instantiate(destroyEffectPrefab, transform.position, Quaternion.identity);
 
-        // **Aqui** instanciamos o prefab separado de FloatingTextUI:
+        // Floating text de pontos
         if (floatingTextUIPrefab != null)
         {
-            Vector3 spawnPos = transform.position + floatingTextUIOffset;
-            GameObject go = Instantiate(floatingTextUIPrefab, spawnPos, Quaternion.identity);
-            FloatingTextUI ft = go.GetComponent<FloatingTextUI>();
+            var pos = transform.position + floatingTextUIOffset;
+            var go = Instantiate(floatingTextUIPrefab, pos, Quaternion.identity);
+            var ft = go.GetComponent<FloatingTextUI>();
             if (ft != null)
             {
                 ft.rotationOffset = floatingTextUIRotOffset;
@@ -159,28 +196,20 @@ public class DestructibleItem : MonoBehaviour
             }
         }
 
-        // efeito final e som…
-        if (destroyEffectPrefab != null)
-            Instantiate(destroyEffectPrefab, transform.position, Quaternion.identity);
-        if (destroySounds != null && destroySounds.Count > 0)
-            AudioSource.PlayClipAtPoint(
-                destroySounds[UnityEngine.Random.Range(0, destroySounds.Count)],
-                transform.position
-            );
-
+        OnItemDestroyed?.Invoke(points);
         Destroy(gameObject);
     }
 
     void OnCollisionEnter(Collision collision)
     {
-        // pousou no chão?
+        // Marca aterrissagem
         if (!hasLanded && collision.gameObject.CompareTag(groundTag))
         {
             hasLanded = true;
             StartCoroutine(EnableHitDetection());
         }
 
-        // colidiu com martelo?
+        // Ao tocar o martelo, chama ReceiveHit
         if (collision.gameObject.CompareTag(hammerTag))
             ReceiveHit();
     }
