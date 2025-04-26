@@ -62,11 +62,21 @@ MonoBehaviour:
         - globalObjectIdString: GlobalObjectId_V1-2-99c9720ab356a0642a771bea13969a05-308839607-0
         - globalObjectIdString: GlobalObjectId_V1-2-99c9720ab356a0642a771bea13969a05-1039597370-0
         - globalObjectIdString: GlobalObjectId_V1-2-99c9720ab356a0642a771bea13969a05-1637995745-0
+        - globalObjectIdString: GlobalObjectId_V1-2-99c9720ab356a0642a771bea13969a05-1320719626-0
+        - globalObjectIdString: GlobalObjectId_V1-2-99c9720ab356a0642a771bea13969a05-1673775920-0
+        - globalObjectIdString: GlobalObjectId_V1-2-99c9720ab356a0642a771bea13969a05-1101727865-0
+        - globalObjectIdString: GlobalObjectId_V1-2-99c9720ab356a0642a771bea13969a05-471774072-0
+        - globalObjectIdString: GlobalObjectId_V1-2-99c9720ab356a0642a771bea13969a05-1420513407-0
+        - globalObjectIdString: GlobalObjectId_V1-2-99c9720ab356a0642a771bea13969a05-1161368136-0
+        - globalObjectIdString: GlobalObjectId_V1-2-99c9720ab356a0642a771bea13969a05-466278220-0
+        - globalObjectIdString: GlobalObjectId_V1-2-99c9720ab356a0642a771bea13969a05-2137042555-0
+        - globalObjectIdString: GlobalObjectId_V1-2-99c9720ab356a0642a771bea13969a05-734833430-0
+        - globalObjectIdString: GlobalObjectId_V1-2-99c9720ab356a0642a771bea13969a05-6828867812188519248-1603099091
         values:
         - colorIndex: 5
           iconNameOrGuid: Canvas Icon
         - colorIndex: 1
-          iconNameOrGuid: ScriptableObject Icon
+          iconNameOrGuid: Settings Icon
         - colorIndex: 0
           iconNameOrGuid: Camera Icon
         - colorIndex: 0
@@ -122,7 +132,7 @@ MonoBehaviour:
         - colorIndex: 4
           iconNameOrGuid: MeshCollider Icon
         - colorIndex: 1
-          iconNameOrGuid: ScriptableObject Icon
+          iconNameOrGuid: Settings Icon
         - colorIndex: 5
           iconNameOrGuid: Canvas Icon
         - colorIndex: 7
@@ -137,6 +147,26 @@ MonoBehaviour:
           iconNameOrGuid: Canvas Icon
         - colorIndex: 5
           iconNameOrGuid: Canvas Icon
+        - colorIndex: 3
+          iconNameOrGuid: Light Icon
+        - colorIndex: 3
+          iconNameOrGuid: Light Icon
+        - colorIndex: 6
+          iconNameOrGuid: 
+        - colorIndex: 1
+          iconNameOrGuid: StandaloneInputModule Icon
+        - colorIndex: 6
+          iconNameOrGuid: PreMatCube
+        - colorIndex: 0
+          iconNameOrGuid: Camera Icon
+        - colorIndex: 7
+          iconNameOrGuid: PreMatQuad
+        - colorIndex: 3
+          iconNameOrGuid: Light Icon
+        - colorIndex: 3
+          iconNameOrGuid: Light Icon
+        - colorIndex: 3
+          iconNameOrGuid: Favorite
     - goDatas_byGlobalId:
         keys:
         - globalObjectIdString: GlobalObjectId_V1-1-1931c88e06604784d8cdbe0e0dc58e32-5441832558212438119-0

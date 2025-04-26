@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -30,10 +31,18 @@ public class CustomCursor : MonoBehaviour
     [Tooltip("Deadzone abaixo da qual ignora o input do stick")]
     public float moveDeadzone = 0.2f;
 
+    [Header("Touchscreen Settings")]
+    public bool supportTouchscreen = true;
+    public bool hideCursorAfterTouch = false;
+    [Tooltip("Tempo (em segundos) para esconder o cursor após o toque.")]
+    public float hideDelay = 2f;
+
     GameObject cursorInstance;
     Camera cam;
     Vector2 screenPos;
     bool usingGamepad;
+    Coroutine hideCoroutine;
+    Renderer[] renderers;
 
     void OnEnable()
     {
@@ -51,45 +60,79 @@ public class CustomCursor : MonoBehaviour
     {
         Cursor.visible = false;
         cam = Camera.main;
-        screenPos = Mouse.current != null
-            ? Mouse.current.position.ReadValue()
-            : new Vector2(Screen.width / 2, Screen.height / 2);
+        screenPos = new Vector2(Screen.width / 2, Screen.height / 2);
 
         if (cursorPrefab != null)
         {
-            cursorInstance = Instantiate(cursorPrefab,
-                                         Vector3.zero,
-                                         Quaternion.Euler(rotationOffset));
+            cursorInstance = Instantiate(cursorPrefab, Vector3.zero, Quaternion.Euler(rotationOffset));
             cursorInstance.transform.localScale = cursorScale;
+            renderers = cursorInstance.GetComponentsInChildren<Renderer>();
+
+            if (supportTouchscreen)
+                SetCursorVisible(false); // começa invisível se usar touch
+            else
+                SetCursorVisible(true);  // começa visível se não usar touch
         }
-        else Debug.LogError("Cursor Prefab não atribuído!");
+        else
+        {
+            Debug.LogError("Cursor Prefab não atribuído!");
+        }
     }
+
 
     void Update()
     {
-        // lê o somatório de todos os bindings de move
+        if (cursorInstance == null) return;
+
         Vector2 gp = Vector2.zero;
         foreach (var ar in moveActions)
             gp += ar.action.ReadValue<Vector2>();
 
-        // detecta se estamos usando stick ou mouse
         if (gp.magnitude > moveDeadzone)
+        {
             usingGamepad = true;
-        else if (Mouse.current != null &&
-                 Mouse.current.delta.ReadValue() != Vector2.zero)
+        }
+        else if (Mouse.current != null && Mouse.current.delta.ReadValue() != Vector2.zero)
+        {
             usingGamepad = false;
+        }
+        else if (supportTouchscreen && Touchscreen.current != null && Touchscreen.current.primaryTouch.press.isPressed)
+        {
+            usingGamepad = false;
+        }
 
-        // aplica o movimento
         if (usingGamepad)
             MoveWithGamepad(gp);
         else
-            MoveWithMouse();
+            MoveWithPointer();
     }
 
-    void MoveWithMouse()
+    void MoveWithPointer()
     {
-        screenPos = Mouse.current.position.ReadValue();
-        UpdateInstancePosition();
+        if (supportTouchscreen && Touchscreen.current != null)
+        {
+            var touch = Touchscreen.current.primaryTouch;
+            if (touch.press.wasPressedThisFrame)
+            {
+                screenPos = touch.position.ReadValue();
+                UpdateInstancePosition();
+
+                SetCursorVisible(true); // Aparece no toque
+
+                if (hideCursorAfterTouch)
+                {
+                    if (hideCoroutine != null)
+                        StopCoroutine(hideCoroutine);
+
+                    hideCoroutine = StartCoroutine(HideCursorAfterDelay());
+                }
+            }
+        }
+        else if (Mouse.current != null)
+        {
+            screenPos = Mouse.current.position.ReadValue();
+            UpdateInstancePosition();
+        }
     }
 
     void MoveWithGamepad(Vector2 gp)
@@ -124,5 +167,22 @@ public class CustomCursor : MonoBehaviour
 
         cursorInstance.transform.position = worldPos;
         cursorInstance.transform.rotation = Quaternion.Euler(rotationOffset);
+    }
+
+    void SetCursorVisible(bool visible)
+    {
+        if (renderers == null) return;
+
+        foreach (var r in renderers)
+        {
+            r.enabled = visible;
+        }
+    }
+
+    IEnumerator HideCursorAfterDelay()
+    {
+        yield return new WaitForSeconds(hideDelay);
+        if (cursorInstance != null)
+            SetCursorVisible(false);
     }
 }

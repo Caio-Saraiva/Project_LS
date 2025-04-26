@@ -39,14 +39,27 @@ public class WhackMotion : MonoBehaviour
     {
         if (isWhacking) return;
 
-        // se qualquer uma das ações disparou, faz o whack
+        bool triggerDetected = false;
+
+        // Detecta botões (gamepad, teclado, etc)
         foreach (var ar in whackActions)
         {
             if (ar.action.triggered)
             {
-                StartCoroutine(PerformWhack());
+                triggerDetected = true;
                 break;
             }
+        }
+
+        // Detecta toques (tela touchscreen)
+        if (Touchscreen.current != null && Touchscreen.current.primaryTouch.press.wasPressedThisFrame)
+        {
+            triggerDetected = true;
+        }
+
+        if (triggerDetected)
+        {
+            StartCoroutine(PerformWhack());
         }
     }
 
@@ -58,7 +71,7 @@ public class WhackMotion : MonoBehaviour
         Quaternion startQ = Quaternion.Euler(initialRotationEuler);
         Quaternion endQ = Quaternion.Euler(finalRotationEuler);
 
-        // vai até o end
+        // Vai até o end
         while (elapsed < half)
         {
             elapsed += Time.deltaTime;
@@ -67,7 +80,7 @@ public class WhackMotion : MonoBehaviour
             yield return null;
         }
 
-        // volta pro start
+        // Volta pro start
         elapsed = 0f;
         while (elapsed < half)
         {
