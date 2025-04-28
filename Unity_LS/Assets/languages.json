@@ -1,0 +1,38 @@
+{
+    "en": {
+        "press_splash": "press anywhere to start!",
+        "play_btn": "PLAY",
+        "settings_btn": "SETTINGS",
+        "credits_btn": "CREDITS",
+        "back_btn": "BACK",
+        "credits": "CREDITS",
+        "how_to_play": "HOW TO PLAY",
+        "instructions": "\n\nYour job is to destroy any trash by hitting them!\nLike this Glass Bottle.\n\n\n\n\n\nBut be aware that some trash need more hits to be fully destroyed!",
+        "inst_hint": "->     <- HIT IT!",
+        "leaderboard": "LEADERBOARD",
+        "settings":"SETIINGS",
+        "mute":"MUTE SOUND",
+        "quit_app":"EXIT",
+        "results":"RESULTS",
+        "next_btn":"NEXT",
+        "submit_btn":"SUBMIT"
+    },
+    "pt": {
+        "press_splash": "toque para começar!",
+        "play_btn": "JOGAR",
+        "settings_btn": "CONFIGS",
+        "credits_btn": "CRÉDITOS",
+        "back_btn": "VOLTAR",
+        "credits": "CRÉDITOS",
+        "how_to_play": "COMO JOGAR",
+        "instructions": "\n\n\nSeu trabalho é destruir qualquer lixo batendo ele!\nComo essa Garrafa de Vidro.\n\n\n\n\nMas se atente que alguns lixos precisam de mais de uma batida para destruir completamente!",
+        "inst_hint": "->     <-   BATA!",
+        "leaderboard": "QUADRO DE LIDERES",
+        "settings":"CONFIGURAÇÔES",
+        "mute":"MUTAR SOM",
+        "quit_app":"SAIR",
+        "results":"RESULTADOS",
+        "next_btn":"PRÓXIMO",
+        "submit_btn":"ENVIAR"
+    }
+}
