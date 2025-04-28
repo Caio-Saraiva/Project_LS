@@ -332,39 +332,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1366432639840974179, guid: 13066a118fccb9047af3da9e8f42ea1f, type: 3}
   m_PrefabInstance: {fileID: 595713360}
   m_PrefabAsset: {fileID: 0}
---- !u!21 &52772628
-Material:
-  serializedVersion: 8
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: PixelCorners/PixelRoundedCorners
-  m_Shader: {fileID: 4800000, guid: 3ffa892c5904391418d1428f2d807d03, type: 3}
-  m_Parent: {fileID: 0}
-  m_ModifiedSerializedProperties: 0
-  m_ValidKeywords: []
-  m_InvalidKeywords: []
-  m_LightmapFlags: 4
-  m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_LockedProperties: 
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs:
-    - _MainTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    m_Ints: []
-    m_Floats: []
-    m_Colors:
-    - _WidthHeightRadiusDensity: {r: 500, g: 250, b: 75, a: 9.5}
-  m_BuildTextureStacks: []
-  m_AllowLocking: 1
 --- !u!1 &58239892 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5893236418510507199, guid: 6463f5aac83df324988592941eb533d1, type: 3}
@@ -1651,7 +1618,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 52772628}
+  m_Material: {fileID: 1157843428}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
@@ -1991,10 +1958,10 @@ PrefabInstance:
     - target: {fileID: 1369088117244163017, guid: 8ad0d30728796f549b991ae7c0fa6b14, type: 3}
       propertyPath: m_Material
       value: 
-      objectReference: {fileID: 2100000, guid: fff734fe4e97b7e4695ec0602d3c4d1d, type: 2}
+      objectReference: {fileID: 2100000, guid: bd5653f5e60071d4ea1e3818c541be14, type: 2}
     - target: {fileID: 4120133049524484078, guid: 8ad0d30728796f549b991ae7c0fa6b14, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5270502183216606751, guid: 8ad0d30728796f549b991ae7c0fa6b14, type: 3}
       propertyPath: m_Name
@@ -2212,39 +2179,6 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
   CustomBlends: {fileID: 0}
---- !u!21 &338669253
-Material:
-  serializedVersion: 8
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: PixelCorners/PixelRoundedCorners
-  m_Shader: {fileID: 4800000, guid: 3ffa892c5904391418d1428f2d807d03, type: 3}
-  m_Parent: {fileID: 0}
-  m_ModifiedSerializedProperties: 0
-  m_ValidKeywords: []
-  m_InvalidKeywords: []
-  m_LightmapFlags: 4
-  m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_LockedProperties: 
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs:
-    - _MainTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    m_Ints: []
-    m_Floats: []
-    m_Colors:
-    - _WidthHeightRadiusDensity: {r: 500, g: 100, b: 50, a: 5}
-  m_BuildTextureStacks: []
-  m_AllowLocking: 1
 --- !u!1 &385973095 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7331800169370449972, guid: 6463f5aac83df324988592941eb533d1, type: 3}
@@ -4860,7 +4794,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 1138987081}
+  m_Material: {fileID: 919823471}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
@@ -5361,6 +5295,39 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4850690594856416715, guid: 6463f5aac83df324988592941eb533d1, type: 3}
   m_PrefabInstance: {fileID: 1946421966}
   m_PrefabAsset: {fileID: 0}
+--- !u!21 &919823471
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: PixelCorners/PixelRoundedCorners
+  m_Shader: {fileID: 4800000, guid: 3ffa892c5904391418d1428f2d807d03, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats: []
+    m_Colors:
+    - _WidthHeightRadiusDensity: {r: 500, g: 100, b: 50, a: 5}
+  m_BuildTextureStacks: []
+  m_AllowLocking: 1
 --- !u!1001 &925372946
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5547,6 +5514,39 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4367058999705415452, guid: f7731a13f1886a647b4d3cbe927662d1, type: 3}
   m_PrefabInstance: {fileID: 98751399}
   m_PrefabAsset: {fileID: 0}
+--- !u!21 &944302790
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: PixelCorners/PixelRoundedCorners
+  m_Shader: {fileID: 4800000, guid: 3ffa892c5904391418d1428f2d807d03, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats: []
+    m_Colors:
+    - _WidthHeightRadiusDensity: {r: 500, g: 100, b: 50, a: 5}
+  m_BuildTextureStacks: []
+  m_AllowLocking: 1
 --- !u!1 &950193708
 GameObject:
   m_ObjectHideFlags: 0
@@ -6393,7 +6393,7 @@ Transform:
   - {fileID: 157827931}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!21 &1138987081
+--- !u!21 &1157843428
 Material:
   serializedVersion: 8
   m_ObjectHideFlags: 0
@@ -6423,7 +6423,7 @@ Material:
     m_Ints: []
     m_Floats: []
     m_Colors:
-    - _WidthHeightRadiusDensity: {r: 500, g: 100, b: 50, a: 5}
+    - _WidthHeightRadiusDensity: {r: 500, g: 250, b: 75, a: 9.5}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
 --- !u!1 &1161368136
@@ -6720,7 +6720,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 338669253}
+  m_Material: {fileID: 944302790}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
@@ -8323,10 +8323,10 @@ PrefabInstance:
     - target: {fileID: 1369088117244163017, guid: 8ad0d30728796f549b991ae7c0fa6b14, type: 3}
       propertyPath: m_Material
       value: 
-      objectReference: {fileID: 2100000, guid: fff734fe4e97b7e4695ec0602d3c4d1d, type: 2}
+      objectReference: {fileID: 2100000, guid: b249ed296181be64c85c751dd202b425, type: 2}
     - target: {fileID: 4120133049524484078, guid: 8ad0d30728796f549b991ae7c0fa6b14, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5270502183216606751, guid: 8ad0d30728796f549b991ae7c0fa6b14, type: 3}
       propertyPath: m_Name
