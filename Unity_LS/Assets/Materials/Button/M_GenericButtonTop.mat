@@ -297,9 +297,9 @@ Material:
     - _ZTest: 4
     - _ZWrite: 1
     m_Colors:
-    - _AlbedoColor: {r: 1, g: 0.4142904, b: 0.25, a: 1}
+    - _AlbedoColor: {r: 0.31764707, g: 0.84705883, b: 0.30980393, a: 1}
     - _BaseColor: {r: 1, g: 0.2714286, b: 0, a: 1}
-    - _Color: {r: 1, g: 0.41429037, b: 0.24999997, a: 1}
+    - _Color: {r: 0.31764704, g: 0.84705883, b: 0.3098039, a: 1}
     - _DissolveBorderColor: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _GoochBrightColor: {r: 1, g: 1, b: 1, a: 1}
